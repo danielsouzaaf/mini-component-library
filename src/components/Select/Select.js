@@ -14,8 +14,8 @@ const Select = ({ label, value, onChange, children }) => {
         {children}
       </NativeSelect>
       <PresentationalBit>
-        {value}
-        <IconWrapper>
+        {displayedValue}
+        <IconWrapper style={{ '--size': 24 + 'px' }}>
           <Icon id="chevron-down" strokeWidth={1} size={24} />
         </IconWrapper>
       </PresentationalBit>
@@ -44,14 +44,28 @@ const PresentationalBit = styled.div`
   background-color: ${COLORS.transparentGray15};
   font-size: ${16 / 16}rem;
   padding: 12px 16px;
+  padding-right: 52px;
+  border-radius: 8px;
+
+  ${NativeSelect}:focus + & {
+    outline: 1px dotted #212121;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+
+  ${NativeSelect}:hover + & {
+    color: ${COLORS.black};
+  }
 `
 
 const IconWrapper = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
+  right: 10px;
   margin: auto;
+  width: var(--size);
+  height: var(--size);
+  pointer-events: none;
 `
 
 export default Select;

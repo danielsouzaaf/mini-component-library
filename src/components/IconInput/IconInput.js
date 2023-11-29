@@ -6,6 +6,23 @@ import { COLORS } from '../../constants';
 import Icon from '../Icon';
 import VisuallyHidden from '../VisuallyHidden';
 
+const STYLES = {
+  small: {
+    '--borderBottom': '1px solid black',
+    '--fontSize': 14 + 'px',
+    '--height': 24 / 16 + 'rem',
+    '--iconSize': 16 + 'px',
+    iconSize: 16,
+  },
+  large: {
+    '--borderBottom': '2px solid black',
+    '--fontSize': 18 + 'px',
+    '--height': 36 / 16 + 'rem',
+    '--iconSize': 24 + 'px',
+    iconSize: 24,
+  }
+};
+
 const IconInput = ({
   label,
   icon,
@@ -13,13 +30,14 @@ const IconInput = ({
   size,
   ...delegated
 }) => {
+  const styles = STYLES[size];
   return (
   <Wrapper>
     <VisuallyHidden>{label}</VisuallyHidden>
-    <IconWrapper style={{ '--size': 16 + 'px' }}>
-      <Icon id={icon} size={16} />
+    <IconWrapper style={styles}>
+      <Icon id={icon} size={styles.iconSize} />
     </IconWrapper>
-    <TextInput {...delegated}/>
+    <TextInput {...delegated} style={styles}/>
   </Wrapper>
   )
 };
@@ -27,6 +45,11 @@ const IconInput = ({
 const Wrapper = styled.label`
    display: block;
    position: relative;
+   color: ${COLORS.gray700};
+
+   &:hover {
+      color: ${COLORS.black};
+    }
 `;
 
 
@@ -35,14 +58,23 @@ const IconWrapper = styled.div`
   top: 0;
   bottom: 0;
   margin: auto 0;
-  height: var(--size);
+  height: var(--iconSize);
 `
 
 const TextInput = styled.input`
-  height: ${24 / 16}rem;
+  width: var(--width);
+  height: var(--height);
+  font-size: var(--fontSize);
   border: none;
-  border-bottom: 1px solid ${COLORS.black};
-  padding-left: 24px;
+  border-bottom: var(--border-bottom);
+  padding-left: var(--height);
+  color: inherit;
+  font-weight: 700;
+  outline-offset: 2px;
+
+  &::placeholder {
+    color: ${COLORS.gray500};
+    font-weight: 400;
 `;
 
 export default IconInput;
